@@ -1,0 +1,33 @@
+# puudub loogelised sulud, treppimine tähtis
+# peale CTR+C et käsklust lõpetada peab ENTER vajutama  ,curl?
+# docker-compose up -d (detached), exec web ls/pwd/bash
+# in linux apt update, apt install curl, curl localhost, exit
+# docker-compose stop, down (eemaldab konteineri), up (loob, vajalik esimesel korral), docker-compose start (käivitab kinni oleva konteineri)
+# esimene arvuti port, teine konteineri port
+# htdocs sees asub html, cat index.html näitab sisu
+# ära tee muudatusi konteineri sees need resettivad, failid mis tulenevad arvutist töötavad
+# microsoftil on admin suurim aga linuxil on root (samuti praegune username)
+services:
+  web:
+    image: httpd:latest
+    ports:
+      - 6969:80
+    volumes:
+      - ./html:/usr/local/apache2/htdocs
+
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: example
+    volumes:
+      - dbdata:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+volumes:
+  dbdata:
