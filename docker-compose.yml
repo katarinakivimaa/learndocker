@@ -1,6 +1,6 @@
 # puudub loogelised sulud, treppimine tähtis
-# peale CTR+C et käsklust lõpetada peab ENTER vajutama  ,curl?
-# docker-compose up -d (detached), exec web ls/pwd/bash
+# peale CTRL+C et käsklust lõpetada peab ENTER vajutama  ,curl?
+# docker-compose up -d (detached), exec web ls/pwd/bash, build (-d)
 # in linux apt update, apt install curl, curl localhost, exit
 # docker-compose stop, down (eemaldab konteineri), up (loob, vajalik esimesel korral), docker-compose start (käivitab kinni oleva konteineri)
 # esimene arvuti port, teine konteineri port
@@ -9,7 +9,9 @@
 # microsoftil on admin suurim aga linuxil on root (samuti praegune username)
 services:
   web:
-    image: httpd:latest
+    build:
+      context: .
+      dockerfile: web.dockerfile
     ports:
       - 6969:80
     volumes:
